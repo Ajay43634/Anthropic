@@ -1,0 +1,11 @@
+import anthropic
+
+client = anthropic.Anthropic()  # reads ANTHROPIC_API_KEY from env automatically
+
+with client.messages.stream(
+    model="claude-sonnet-4-6",
+    max_tokens=1024,
+    messages=[{"role": "user", "content": "Hello!"}]
+) as stream:
+    for text in stream.text_stream:
+        print(text, end="", flush=True)
